@@ -11,7 +11,8 @@ function createPlayer() {
             offsetY : 3,
             width : 26,
             height : 16
-        }
+        },
+        bullet : null
     };
     return player;
 }
@@ -36,6 +37,27 @@ function animatePlayer() {
     else if (player.x + player.sprite.width > canvas.width){
         player.x = canvas.width - player.sprite.width;
     }
+
+    if (Keyboard.SPACE) {
+        if (player.bullet === null) {
+            player.bullet = {
+                x : player.x + player.sprite.width/2 - 2,
+                y : player.y,
+                width : 4,
+                height : 15,
+                color : '#0f0',
+                speed : 9 
+            }
+        }
+    }
+    //Etat
+    if(player.bullet !== null){
+        player.bullet.y -= player.bullet.speed;
+
+        if(player.bullet.y + player.bullet.height <0) {
+            player.bullet = null;
+        } 
+    }
 }
 
 
@@ -54,4 +76,15 @@ function renderPlayer() {
         player.sprite.width,
         player.sprite.height
 );  
+
+//Dessin shoot joueur
+    if (player.bullet !== null){
+        context.fillStyle = player.bullet.color;
+        context.fillRect(
+            player.bullet.x,
+            player.bullet.y,
+            player.bullet.width,
+            player.bullet.height
+        );
+    }
 }
