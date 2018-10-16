@@ -1,20 +1,20 @@
 const Keyboard = {};
 
 const keyMap = {
-    37 : 'LEFT',
-    38 : 'UP',
-    39 : 'RIGHT',
-    40 : 'DOWN',
-    32 : 'SPACE',
-    27 : 'ECHAP'
+    37: 'LEFT',
+    38: 'UP',
+    39: 'RIGHT',
+    40: 'DOWN',
+    32: 'SPACE',
+    27: 'ECHAP'
 };
 
 //gestionnaire d'évenements
-document.addEventListener('keydown' , onKey);
-document.addEventListener('keyup' , onKey);
+document.addEventListener('keydown', onKey);
+document.addEventListener('keyup', onKey);
 
 function onKey(event) {
-    Keyboard[ keyMap[event.keyCode]] = (event.type === 'keydown');
+    Keyboard[keyMap[event.keyCode]] = (event.type === 'keydown');
 }
 
 /* function onkeyDown(event) {

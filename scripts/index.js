@@ -7,24 +7,28 @@ canvas.height = 540;
 
 let timer;
 let player;
+let aliens;
 
 // chargement de l'image du sprite avant de démarrer le jeu
 const spritesheet = new Image();
 spritesheet.src = '../img/spritesheet.png'
-spritesheet.onload = function(){ // fonction exécuteée lorsque le navigateur a fini de charger de PNG
-player = createPlayer();
+spritesheet.onload = function () { // fonction exécuteée lorsque le navigateur a fini de charger de PNG
+    player = createPlayer();
+    aliens = createAliens();
 
-//Demarrage de la boucle continue
-gameloop();
+    //Demarrage de la boucle continue
+    gameloop();
 };
 
 function update() {
     animatePlayer(); //Fonction qui gère l'animation du joueur
+    animateAliens(); //Fonction qui gère l'animation des aliens
 }
 
 function render() {
     context.clearRect(0, 0, canvas.width, canvas.height)
     renderPlayer(); //dessin du joueur
+    renderAliens();//dessin des aliens
 
 }
 
@@ -32,6 +36,6 @@ function render() {
 function gameloop() {
     update();
     render();
-    
+
     timer = window.requestAnimationFrame(gameloop);
 }
