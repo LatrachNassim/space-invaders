@@ -91,9 +91,32 @@ function animateAliens() {
             }
 
         }
-    }
+    } // Fin du mouvement des aliens
+    // Vérification si un aliens ce prend un tir de "player.bullet"
+    if (player.bullet !== null) {
+        for (let i = 0; i < aliens.length; i++) {
+            if (player.bullet.x > aliens[i].x &&
+                player.bullet.x <= aliens[i].x + aliens[i].width &&
+                player.bullet.y > aliens[i].y &&
+                player.bullet.y <= aliens[i].y + aliens[i].height) {
+                //Collission
+                //augmentation du score du joueur
+                player.score += aliens[i].points;
+                player.bullet = null;
+                //Augmentation de la vtesse générale des aliens
+                aliensTimer -= 15;
+                if (aliensTimer < 75) {
+                    aliensTimer = 75;
+                }
+                // Suppression de l'alien du tableau
+                aliens.splice(i, 1);
+                break;
 
-}// Fin du mouvement des aliens
+
+            }
+        }
+    }
+}
 
 
 function renderAliens() {
