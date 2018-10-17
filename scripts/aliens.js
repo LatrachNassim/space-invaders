@@ -43,7 +43,7 @@ const aliensSprites = {
 };
 let aliensTimer = 1000; //intervalle de mouvement d'aleins en mille secondes
 let lastAlienMovement = 0; // instant 't' du dernier déplacement des aliens
-
+let alienExplosion = []; //tableau qui servira à stocker les sprites d'explosion
 
 function createAliens() {
     const aliens = [];
@@ -95,9 +95,8 @@ function animateAliens() {
             } else {
                 aliens[i].spriteIndex = 0;
             }*/
-
-
         }
+
     } // Fin du mouvement des aliens
     // Vérification si un aliens ce prend un tir de "player.bullet"
     if (player.bullet !== null) {
@@ -107,6 +106,7 @@ function animateAliens() {
                 player.bullet.y > aliens[i].y &&
                 player.bullet.y <= aliens[i].y + aliens[i].height) {
                 //Collission
+                createExplosion(aliens[i]);
                 //augmentation du score du joueur
                 player.score += aliens[i].points;
                 player.bullet = null;
@@ -123,7 +123,17 @@ function animateAliens() {
             }
         }
     }
+    
+    for (let i = 0; i < alienExplosion.length; i++) {
+        if (Date.now() - alienExplosion[i].dateCreated > 100) {
+            alienExplosion.splice(i, 1);
+            i--;
+        }
+    }
 }
+
+
+
 
 
 function renderAliens() {
@@ -133,6 +143,8 @@ function renderAliens() {
         let spriteIndex = aliens[i].spriteIndex;
         context.drawImage(
             spritesheet,
+
+
 
             aliensSprites[points][spriteIndex].x,
             aliensSprites[points][spriteIndex].y,
@@ -146,4 +158,40 @@ function renderAliens() {
         );
     }
 
+
+
+    for (let i = 0; i < alienExplosion.length; i++) {
+        context.drawImage(
+            spritesheet,
+            alienExplosion[i].sprite.x,
+            alienExplosion[i].sprite.y,
+            alienExplosion[i].sprite.width,
+            alienExplosion[i].sprite.height,
+
+            alienExplosion[i].x,
+            alienExplosion[i].y,
+            alienExplosion[i].sprite.width,
+            alienExplosion[i].sprite.height,
+
+        );
+    }
+
+
+}
+
+
+// fonction qui créée un explosion à partir d'un alien
+function createExplosion(alien) {
+    alienExplosion.push({
+        x: alien.x,
+        y: alien.y,
+        sprite: {
+            x: 88,
+            y: 25,
+            width: 26,
+            height: 16
+        },
+        dateCreated: Date.now()
+
+    });
 }
