@@ -29,6 +29,7 @@ function render() {
     context.clearRect(0, 0, canvas.width, canvas.height)
     renderPlayer(); //dessin du joueur
     renderAliens();//dessin des aliens
+    renderUI();//Dessin des les elements de l'interface
 
 }
 
